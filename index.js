@@ -9,9 +9,20 @@ passport.use(new GogleStrategy({
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret,
         callbackURL: "/auth/google/callback"
-    }, (accessToken) => {
-        console.log(accessToken);
+    }, (accessToken, refreshToken, profile, done) => {
+        console.log('accesstoken', accessToken);
+        console.log('refreshtoken', refreshToken);
+        console.log('profile', profile);
     })
+);
+
+app.get('/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email']
+}));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/'})
+    // function(req,res) {
+    //     res.redirect('/hello');
+    // }
 );
 
 
