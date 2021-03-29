@@ -1,29 +1,14 @@
 const express = require('express');
-const passport = require('passport');
-const GogleStrategy = require('passport-google-oauth20').Strategy;
-const keys = require('./config/keys');
+require('./services/passport');
+
 
 const app = express();
 
-passport.use(new GogleStrategy({
-        clientID: keys.googleClientID,
-        clientSecret: keys.googleClientSecret,
-        callbackURL: "/auth/google/callback"
-    }, (accessToken, refreshToken, profile, done) => {
-        console.log('accesstoken', accessToken);
-        console.log('refreshtoken', refreshToken);
-        console.log('profile', profile);
-    })
-);
+// this is valid syntax;
+// here when we require the module it returns a function and then we immediatly call the function with the app argument!
+require('./routes/authRoutes')(app);
 
-app.get('/auth/google', passport.authenticate('google', {
-    scope: ['profile', 'email']
-}));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/'})
-    // function(req,res) {
-    //     res.redirect('/hello');
-    // }
-);
+
 
 
 const PORT = process.env.PORT || 5000;
