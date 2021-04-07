@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const path= require('path');
 const cors = require('cors');
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
