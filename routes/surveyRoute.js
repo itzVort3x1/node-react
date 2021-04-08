@@ -21,5 +21,10 @@ module.exports = (app) => {
             dateSent: Date.now()
         });
         const mailer = new Mailer(survey, surveyTemplate(Survey));
+        mailer.send().then(() =>{
+            console.log('Message sent');
+        }).catch((error) => {
+            console.log(error.response.body);
+        })
     });
 };
